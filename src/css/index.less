@@ -1,0 +1,43 @@
+@theme-color: #33c9d4;
+
+// 常用flex布局
+.df {
+  display: flex;
+}
+.df-col {
+  .df;
+  flex-direction: column;
+}
+.df-j-c {
+  .df;
+  justify-content: center;
+}
+.df-j-b {
+  .df;
+  justify-content: space-between;
+}
+.df-a-c {
+  .df;
+  align-items: center;
+}
+.df-c {
+  .df-j-c;
+  .df-a-c;
+}
+
+// 文本溢出省略号显示
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ellipsis(@line) {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line; //第几行
+}
+.ellipsis-2 {
+  .ellipsis(2)
+}

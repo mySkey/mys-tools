@@ -1,0 +1,36 @@
+.df {
+  display: flex;
+}
+.df-col {
+  display: flex;
+  flex-direction: column;
+}
+.df-j-c {
+  display: flex;
+  justify-content: center;
+}
+.df-j-b {
+  display: flex;
+  justify-content: space-between;
+}
+.df-a-c {
+  display: flex;
+  align-items: center;
+}
+.df-c {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ellipsis-2 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
