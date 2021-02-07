@@ -1,26 +1,12 @@
 import common from "./common";
-import reg from "./common/reg";
+import MysReg from "./common/reg";
 
-export { reg, common as default };
+const mysTools = {
+  ...common,
+  ...MysReg
+};
 
-export const {
-  setStorage,
-  getStorage,
-  removeStorage,
-  clearStorage,
-  setSessionStorage,
-  getSessionStorage,
-  removeSessionStorage,
-  clearSessionStorage,
-  stringify,
-  parse,
-  htmlCharset,
-  htmlEncode,
-  htmlDecode,
-  getDataType,
-  downloadFile,
-  paramesToStr,
-  strToParames,
-  checkFormRules,
-  debug
-} = common;
+export { common, MysReg };
+export default mysTools;
+
+console.log(common.get({name: '151'}, 'name', ''));

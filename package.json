@@ -22,9 +22,12 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
     "@types/lodash": "^4.14.168",
     "commander": "^7.0.0",
     "rollup": "^2.38.5",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript": "^1.0.1",

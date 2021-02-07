@@ -1,22 +1,59 @@
-const reg = {
-  isEmail: /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/,
-  isPhone: /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/,
-  isNoPc: /(Android|webOS|iPhone|iPad|iPod|BlackBerry)/gi,
-  isInternet: /\w+:\/\/\w+\.\w+/,
-  isFloat: /^\d+\.\d+$/,
-  isChineseName: /^\d+\.\d+$/,
-};
+/*
+ * @Author: mySkey
+ * @Date: 2021-02-07 15:54:40
+ * @LastEditTime: 2021-02-07 16:30:02
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /mySkey/src/common/reg.ts
+ */
+class MysReg {
+  // 校验邮箱
+  static isEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
-export const {
-  isEmail,
-  isPhone,
-  isNoPc,
-  isInternet,
-  isFloat,
-  isChineseName,
-} = reg;
+  // 校验手机号
+  static isPhone = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
 
-export {
-  reg,
-  reg as default
+  // 校验移动端
+  static isNoPc = /(Android|webOS|iPhone|iPad|iPod|BlackBerry)/gi;
+
+  // 校验域名
+  static isInternet = /\w+:\/\/\w+\.\w+/;
+
+  // 校验数字
+  static isNumber = /^-?\d*\.?\d+$/; // 数字正则
+  static isFloat = /^\d+\.\d+$/; // 浮点数正则
+  static isPos = /^\d+$/; // 正整数正则
+
+  // 校验中文名
+  static isChineseName = /^\d+\.\d+$/;
+
+  // 校验身份证号
+  static isIdCard = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+
+  // 校验IP地址
+  static isIpv4 = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  static isIpv6 = /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))/;
+
+  // 校验十六进制颜色
+  static isHex = /^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/;
+
+  // 校验qq号
+  static isQq = /^[1-9][0-9]{4,10}$/;
+
+  // 校验微信号
+  static isWx = /^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/;
+
+  // 校验车牌号
+  static isCardNumber = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/;
+
+  // 校验中国邮编
+  static isChinesePostcode = /^[1-9]\d{5}(?!\d)$/;
+
+  // 校验经纬度正则
+  // 经度
+  static isLng = /^(\-|\+)?(((\d|[1-9]\d|1[0-7]\d|0{1,3})\.\d{0,6})|(\d|[1-9]\d|1[0-7]\d|0{1,3})|180\.0{0,6}|180)$/;
+  // 纬度
+  static isLat = /^(\-|\+)?([0-8]?\d{1}\.\d{0,6}|90\.0{0,6}|[0-8]?\d{1}|90)$/;
 }
+
+export default MysReg;

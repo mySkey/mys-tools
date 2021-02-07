@@ -1,15 +1,16 @@
-const get = (obj, key, defaultValue) => {
+const get = (obj, key, defaultValue?: any) => {
   let result = obj;
-  for (let k of key.split('.')) {
+  for (let k of key.split(".")) {
+    if (Array.isArray(result)) k = k.replace(/(\[|\])/gi, '')
     if (result[k]) {
-      result = result[k]
+      result = result[k];
     } else {
-      result = false
+      result = false;
       break;
     }
   }
-  return result || defaultValue
-}
+  return result || defaultValue;
+};
 
 const htmlCharset = [
   { key: "&nbsp;", label: " " },
@@ -174,12 +175,18 @@ const checkFormRules = (rules, d) => {
   return result;
 };
 
+/*
+1.右击数据，然后storage as global variable
+2.copy(temp1)
+3.Ctrl + v就能将打印内容copy出来
+*/
 const debug = (...args) => {
   const mode = get(process, "env.NODE_ENV", "");
   if (mode === "development") console.log(...args);
 };
 
 export default {
+  get,
   setStorage,
   getStorage,
   removeStorage,

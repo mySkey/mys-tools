@@ -17,5 +17,4 @@
     "noImplicitAny": false
   },
   "include": ["src"],
-  "files": []
 }
