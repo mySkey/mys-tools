@@ -1,5 +1,10 @@
 @theme-color: #33c9d4;
 
+// 全局定义盒模型
+html {
+  box-sizing: border-box;
+}
+
 // 常用flex布局
 .df {
   display: flex;
@@ -25,6 +30,11 @@
   .df-a-c;
 }
 
+// 清除浮动
+.clearfix:after {
+  clear: both;
+}
+
 // 文本溢出省略号显示
 .ellipsis {
   white-space: nowrap;
@@ -39,5 +49,74 @@
   -webkit-line-clamp: @line; //第几行
 }
 .ellipsis-2 {
-  .ellipsis(2)
+  .ellipsis(2);
+}
+
+// 背景渐变动画
+.bg-gradient-animation {
+  background-image: linear-gradient(#5187c4, #1c2f45);
+  background-size: auto 200%;
+  background-position: 0 100%;
+  transition: background-position 0.5s;
+  &:hover {
+    background-position: 0 0;
+  }
+}
+
+// 模糊文本
+.blurry-text {
+  color: transparent;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+// 字母大小写
+.text-uppercase {
+  text-transform: uppercase;
+}
+.text-first-uppercase {
+  text-transform: capitalize;
+}
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+// 禁止用户选中文本
+.unselect {
+  user-select: none;
+}
+
+// loading
+.loading-base(@w: 20px, @h: 20px) {
+  width: @w;
+  height: @h;
+  border: 1px solid #333333;
+  border-bottom: #aaa 1px solid;
+  border-radius: 50%;
+  animation: load 1.1s infinite linear;
+  -webkit-animation: load 1.1s infinite linear;
+  -moz-animation: load 1.1s infinite linear;
+  -o-animation: load 1.1s infinite linear;
+}
+@keyframes load {
+  from {
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+  }
+}
+.loading {
+  .loading-base();
+}
+
+
+/*
+移动端
+*/
+
+// 灵活滑动
+.super-scroll {
+  -webkit-overflow-scrolling: touch;
 }

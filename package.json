@@ -1,10 +1,11 @@
 {
-  "name": "myskey",
-  "version": "1.0.12",
-  "description": "mySkey private package",
+  "name": "mys-tools",
+  "version": "1.0.1",
+  "description": "mySkey private tools",
   "main": "index.js",
   "browser": "dist/index.js",
   "scripts": {
+    "test": "npm run build && node dist/index.js",
     "copy": "npm run copy:package && npm run copy:utils && npm run copy:css",
     "copy:package": "cp package.json README.md dist",
     "copy:utils": "cp src/utils -rf dist",
@@ -15,7 +16,8 @@
   "keywords": [
     "typeScript",
     "mySkey",
-    "package"
+    "package",
+    "mys-tools"
   ],
   "author": "",
   "license": "MIT",

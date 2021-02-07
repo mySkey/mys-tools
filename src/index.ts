@@ -6,3 +6,5 @@ export {
   common,
   common as default
 }
+
+console.log(common.isDataType('hello world'))
