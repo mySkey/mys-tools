@@ -1,14 +1,14 @@
 {
   "name": "mys-tools",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "mySkey private tools",
   "main": "index.js",
   "browser": "dist/index.js",
   "scripts": {
-    "test": "npm run build && node dist/index.js",
+    "test": "rollup -c && node dist/index.js",
     "copy": "npm run copy:package && npm run copy:utils && npm run copy:css",
     "copy:package": "cp package.json README.md dist",
-    "copy:utils": "cp src/utils -rf dist",
+    "copy:utils": "cp src/utils -rf dist && cp src/antd -rf dist",
     "copy:css": "lessc src/css/index.less src/css/index.css && cp src/css -rf dist",
     "build": "rollup -c && npm run copy",
     "publish": "rollup -c && npm run copy && node scripts/publish.js"
@@ -22,10 +22,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.1.0",
     "@types/lodash": "^4.14.168",
     "commander": "^7.0.0",
     "rollup": "^2.38.5",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript": "^1.0.1",
     "shelljs": "^0.8.4",

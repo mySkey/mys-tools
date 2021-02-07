@@ -1,10 +1,26 @@
-import common from './common'
-import reg from './common/reg'
+import common from "./common";
+import reg from "./common/reg";
 
-export {
-  reg,
-  common,
-  common as default
-}
+export { reg, common as default };
 
-console.log(common.isDataType('hello world'))
+export const {
+  setStorage,
+  getStorage,
+  removeStorage,
+  clearStorage,
+  setSessionStorage,
+  getSessionStorage,
+  removeSessionStorage,
+  clearSessionStorage,
+  stringify,
+  parse,
+  htmlCharset,
+  htmlEncode,
+  htmlDecode,
+  getDataType,
+  downloadFile,
+  paramesToStr,
+  strToParames,
+  checkFormRules,
+  debug
+} = common;

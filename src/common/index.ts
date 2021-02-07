@@ -1,6 +1,15 @@
-import lodash from "lodash";
-
-const { get } = lodash
+const get = (obj, key, defaultValue) => {
+  let result = obj;
+  for (let k of key.split('.')) {
+    if (result[k]) {
+      result = result[k]
+    } else {
+      result = false
+      break;
+    }
+  }
+  return result || defaultValue
+}
 
 const htmlCharset = [
   { key: "&nbsp;", label: " " },
@@ -12,7 +21,7 @@ const htmlCharset = [
   { key: "&yen;", label: "¥" },
   { key: "&copy;", label: "©" },
   { key: "&times;", label: "×" },
-  { key: "&divide;", label: "÷" },
+  { key: "&divide;", label: "÷" }
 ];
 
 // localStorage操作
@@ -66,14 +75,14 @@ const clearSessionStorage = () => {
 };
 
 // JSON操作
-const stringify = (value) => {
+const stringify = value => {
   try {
     JSON.stringify(value);
   } catch (err) {
     console.log(`JSON.stringify错误:`, err);
   }
 };
-const parse = (value) => {
+const parse = value => {
   let result;
   try {
     result = JSON.parse(value);
@@ -85,29 +94,31 @@ const parse = (value) => {
 
 // html字符操作
 const htmlEncode = (str: string) => {
-  const regStr = `(${htmlCharset.map((item) => item.label).join("|")})`;
-  const result = str.replace(new RegExp(regStr, "gi"), function (t) {
-    const item: any = htmlCharset.find((item) => item.label === t);
+  const regStr = `(${htmlCharset.map(item => item.label).join("|")})`;
+  const result = str.replace(new RegExp(regStr, "gi"), function(t) {
+    const item: any = htmlCharset.find(item => item.label === t);
     return item.key;
   });
   return result;
 };
 const htmlDecode = (str: string) => {
-  const regStr = `(${htmlCharset.map((item) => item.key).join("|")})`;
-  const result = str.replace(new RegExp(regStr, "gi"), function (t) {
-    const item: any = htmlCharset.find((item) => item.key === t);
+  const regStr = `(${htmlCharset.map(item => item.key).join("|")})`;
+  const result = str.replace(new RegExp(regStr, "gi"), function(t) {
+    const item: any = htmlCharset.find(item => item.key === t);
     return item.label;
   });
   return result;
 };
 
 // 判断数据类型
-const isDataType = (data) => {
-  return Object.prototype.toString.call(data);
+const getDataType = data => {
+  const value: any = Object.prototype.toString.call(data);
+  const result = value.match(/\[object (\S*)\]/)[1];
+  return result.toLocaleLowerCase();
 };
 
 // 下载文件
-const downloadFile = (url) => {
+const downloadFile = url => {
   const iframe = document.createElement("iframe");
   iframe.style.display = "none"; // 防止影响页面
   iframe.style.height = "0"; // 防止影响页面
@@ -119,12 +130,24 @@ const downloadFile = (url) => {
   }, 5 * 60 * 1000);
 };
 
-const paramesToStr = (parames) => {
+const paramesToStr = parames => {
   let res = "?";
   for (let key in parames) {
     res += `${key}=${parames[key]}&`;
   }
   return res.slice(0, res.length - 1);
+};
+
+const strToParames = str => {
+  let result = {};
+  if (str.includes("?")) {
+    const paramesStr = str.slice(str.indexOf("?") + 1);
+    paramesStr.split("&").forEach(item => {
+      const [key, value] = item.split("=");
+      result[key] = value;
+    });
+  }
+  return result;
 };
 
 const checkFormRules = (rules, d) => {
@@ -134,15 +157,15 @@ const checkFormRules = (rules, d) => {
     len: (base, val) => base != val.length,
     min: (base, val) => base > val.length,
     max: (base, val) => base < val.length,
-    pattern: (base, val) => !base.test(val),
+    pattern: (base, val) => !base.test(val)
   };
   outer: for (let i in rules) {
     inter: for (let j in rules[i]) {
       const item = rules[i][j];
-      const itemKeys = Object.keys(item).filter((key) =>
+      const itemKeys = Object.keys(item).filter(key =>
         Object.keys(ruleObj).includes(key)
       );
-      if (itemKeys.filter((key) => ruleObj[key](item[key], d[i])).length > 0) {
+      if (itemKeys.filter(key => ruleObj[key](item[key], d[i])).length > 0) {
         result = item["message"];
         break outer;
       }
@@ -156,7 +179,7 @@ const debug = (...args) => {
   if (mode === "development") console.log(...args);
 };
 
-const common = {
+export default {
   setStorage,
   getStorage,
   removeStorage,
@@ -170,31 +193,10 @@ const common = {
   htmlCharset,
   htmlEncode,
   htmlDecode,
-  isDataType,
+  getDataType,
   downloadFile,
   paramesToStr,
+  strToParames,
   checkFormRules,
-  debug,
-};
-
-export {
-  setStorage,
-  getStorage,
-  removeStorage,
-  clearStorage,
-  setSessionStorage,
-  getSessionStorage,
-  removeSessionStorage,
-  clearSessionStorage,
-  stringify,
-  parse,
-  htmlCharset,
-  htmlEncode,
-  htmlDecode,
-  isDataType,
-  downloadFile,
-  paramesToStr,
-  checkFormRules,
-  debug,
-  common as default,
+  debug
 };
