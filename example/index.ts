@@ -1,4 +1,4 @@
-import _, { getDataType } from "../dist/index.js";
+import _, { getDataType } from "../dist/index.es.js";
 import dayjs from "dayjs";
 
 console.log(getDataType({}));

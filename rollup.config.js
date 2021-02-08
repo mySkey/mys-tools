@@ -2,16 +2,49 @@ import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import typescript from "rollup-plugin-typescript2";
 import babel from "rollup-plugin-babel";
-import pkg from "./package.json";
+
+/*
+  esm es6 模式
+  iife(Immediately-invoked function expression ) 立即调用模式
+  AMD
+  CommonJS
+  UMD
+*/
 
 export default {
   input: "src/index.ts", // 打包入口
-  output: {
-    // 打包出口
-    name: "mySkey",
-    file: pkg.browser, // 最终打包出来的文件路径和文件名，这里是在package.json的browser: 'dist/index.js'字段中配置的
-    format: "es" // umd是兼容amd/cjs/iife的通用打包格式，适合浏览器
-  },
+  output: [
+    {
+      name: "mySkey",
+      file: 'dist/index.js',
+      format: "umd"
+    },
+    {
+      name: "mySkey",
+      file: 'dist/index.es.js',
+      format: "es"
+    },
+    // {
+    //   name: "mySkey",
+    //   file: 'dist/index.iife.js',
+    //   format: "iife"
+    // },
+    // {
+    //   name: "mySkey",
+    //   file: 'dist/index.umd.js',
+    //   format: "umd"
+    // },
+    // {
+    //   name: "mySkey",
+    //   file: 'dist/index.amd.js',
+    //   format: "amd"
+    // },
+    // {
+    //   name: "mySkey",
+    //   file: 'dist/index.cjs.js',
+    //   format: "cjs"
+    // },
+  ],
   plugins: [
     // 打包插件
     babel(),

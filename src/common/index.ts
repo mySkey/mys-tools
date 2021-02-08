@@ -90,11 +90,13 @@ const clearSessionStorage = () => {
 
 // JSON操作
 const stringify = value => {
+  let result;
   try {
-    JSON.stringify(value);
+    result = JSON.stringify(value);
   } catch (err) {
     console.log(`JSON.stringify错误:`, err);
   }
+  return result;
 };
 const parse = value => {
   let result;

@@ -1,9 +1,8 @@
 {
   "name": "mys-tools",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "mySkey private tools",
   "main": "index.js",
-  "browser": "dist/index.js",
   "scripts": {
     "test": "rollup -c && cd example && rollup -c && node index.js",
     "copy": "npm run copy:package && npm run copy:utils && npm run copy:css",
