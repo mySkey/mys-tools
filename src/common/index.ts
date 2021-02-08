@@ -1,7 +1,7 @@
 const get = (obj, key, defaultValue?: any) => {
   let result = obj;
   for (let k of key.split(".")) {
-    if (Array.isArray(result)) k = k.replace(/(\[|\])/gi, '')
+    if (Array.isArray(result)) k = k.replace(/(\[|\])/gi, "");
     if (result[k]) {
       result = result[k];
     } else {
@@ -10,6 +10,19 @@ const get = (obj, key, defaultValue?: any) => {
     }
   }
   return result || defaultValue;
+};
+
+const cloneDeep = obj => {
+  if (typeof obj !== "object") return obj;
+  const newObj =
+    Object.prototype.toString.call(obj) === "[object Array]" ? [] : {};
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      newObj[key] =
+        typeof obj[key] !== "object" ? obj[key] : cloneDeep(obj[key]);
+    }
+  }
+  return newObj;
 };
 
 const htmlCharset = [
@@ -185,8 +198,9 @@ const debug = (...args) => {
   if (mode === "development") console.log(...args);
 };
 
-export default {
+export {
   get,
+  cloneDeep,
   setStorage,
   getStorage,
   removeStorage,
