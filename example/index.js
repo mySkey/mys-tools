@@ -31,7 +31,19 @@
     return __assign.apply(this, arguments);
   };
 
-  var get = function (obj, key, defaultValue) {
+  var htmlCharset = [
+      { key: "&nbsp;", label: " " },
+      { key: "&lt;", label: "<" },
+      { key: "&gt;", label: ">" },
+      { key: "&amp;", label: "&" },
+      { key: "&quot;", label: '"' },
+      { key: "&apos;", label: "'" },
+      { key: "&yen;", label: "¥" },
+      { key: "&copy;", label: "©" },
+      { key: "&times;", label: "×" },
+      { key: "&divide;", label: "÷" }
+  ];
+  function get(obj, key, defaultValue) {
       var result = obj;
       for (var _i = 0, _a = key.split("."); _i < _a.length; _i++) {
           var k = _a[_i];
@@ -46,8 +58,8 @@
           }
       }
       return result || defaultValue;
-  };
-  var cloneDeep = function (obj) {
+  }
+  function cloneDeep(obj) {
       if (typeof obj !== "object")
           return obj;
       var newObj = Object.prototype.toString.call(obj) === "[object Array]" ? [] : {};
@@ -58,29 +70,17 @@
           }
       }
       return newObj;
-  };
-  var htmlCharset = [
-      { key: "&nbsp;", label: " " },
-      { key: "&lt;", label: "<" },
-      { key: "&gt;", label: ">" },
-      { key: "&amp;", label: "&" },
-      { key: "&quot;", label: '"' },
-      { key: "&apos;", label: "'" },
-      { key: "&yen;", label: "¥" },
-      { key: "&copy;", label: "©" },
-      { key: "&times;", label: "×" },
-      { key: "&divide;", label: "÷" }
-  ];
+  }
   // localStorage操作
-  var setStorage = function (key, value) {
+  function setStorage(key, value) {
       try {
           localStorage.setItem(key, JSON.stringify(value));
       }
       catch (err) {
           console.log("localStorage\u5B58\u50A8" + key + "\u5931\u8D25", err);
       }
-  };
-  var getStorage = function (key) {
+  }
+  function getStorage(key) {
       var result;
       try {
           var value = localStorage.getItem(key) || "";
@@ -90,23 +90,23 @@
           console.log("localStorage\u83B7\u53D6" + key + "\u5931\u8D25", err);
       }
       return result;
-  };
-  var removeStorage = function (key) {
+  }
+  function removeStorage(key) {
       localStorage.removeItem(key);
-  };
-  var clearStorage = function () {
+  }
+  function clearStorage() {
       localStorage.clear();
-  };
+  }
   // sessionStorage操作
-  var setSessionStorage = function (key, value) {
+  function setSessionStorage(key, value) {
       try {
           sessionStorage.setItem(key, JSON.stringify(value));
       }
       catch (err) {
           console.log("sessionStorage\u5B58\u50A8" + key + "\u5931\u8D25", err);
       }
-  };
-  var getSessionStorage = function (key) {
+  }
+  function getSessionStorage(key) {
       var result;
       try {
           var value = sessionStorage.getItem(key) || "";
@@ -116,23 +116,25 @@
           console.log("sessionStorage\u83B7\u53D6" + key + "\u5931\u8D25", err);
       }
       return result;
-  };
-  var removeSessionStorage = function (key) {
+  }
+  function removeSessionStorage(key) {
       sessionStorage.removeItem(key);
-  };
-  var clearSessionStorage = function () {
+  }
+  function clearSessionStorage() {
       sessionStorage.clear();
-  };
+  }
   // JSON操作
-  var stringify = function (value) {
+  function stringify(value) {
+      var result;
       try {
-          JSON.stringify(value);
+          result = JSON.stringify(value);
       }
       catch (err) {
           console.log("JSON.stringify\u9519\u8BEF:", err);
       }
-  };
-  var parse = function (value) {
+      return result;
+  }
+  function parse(value) {
       var result;
       try {
           result = JSON.parse(value);
@@ -141,32 +143,32 @@
           console.log("JSON.parse\u9519\u8BEF:", err);
       }
       return result;
-  };
+  }
   // html字符操作
-  var htmlEncode = function (str) {
+  function htmlEncode(str) {
       var regStr = "(" + htmlCharset.map(function (item) { return item.label; }).join("|") + ")";
       var result = str.replace(new RegExp(regStr, "gi"), function (t) {
           var item = htmlCharset.find(function (item) { return item.label === t; });
           return item.key;
       });
       return result;
-  };
-  var htmlDecode = function (str) {
+  }
+  function htmlDecode(str) {
       var regStr = "(" + htmlCharset.map(function (item) { return item.key; }).join("|") + ")";
       var result = str.replace(new RegExp(regStr, "gi"), function (t) {
           var item = htmlCharset.find(function (item) { return item.key === t; });
           return item.label;
       });
       return result;
-  };
+  }
   // 判断数据类型
-  var getDataType = function (data) {
+  function getDataType(data) {
       var value = Object.prototype.toString.call(data);
       var result = value.match(/\[object (\S*)\]/)[1];
       return result.toLocaleLowerCase();
-  };
+  }
   // 下载文件
-  var downloadFile = function (url) {
+  function downloadFile(url) {
       var iframe = document.createElement("iframe");
       iframe.style.display = "none"; // 防止影响页面
       iframe.style.height = "0"; // 防止影响页面
@@ -176,15 +178,15 @@
       setTimeout(function () {
           iframe.remove();
       }, 5 * 60 * 1000);
-  };
-  var paramesToStr = function (parames) {
+  }
+  function paramesToStr(parames) {
       var res = "?";
       for (var key in parames) {
           res += key + "=" + parames[key] + "&";
       }
       return res.slice(0, res.length - 1);
-  };
-  var strToParames = function (str) {
+  }
+  function strToParames(str) {
       var result = {};
       if (str.includes("?")) {
           var paramesStr = str.slice(str.indexOf("?") + 1);
@@ -194,8 +196,8 @@
           });
       }
       return result;
-  };
-  var checkFormRules = function (rules, d) {
+  }
+  function checkFormRules(rules, d) {
       var result = false;
       var ruleObj = {
           required: function (_, val) { return !val; },
@@ -229,21 +231,24 @@
           }
       }
       return result;
-  };
+  }
   /*
   1.右击数据，然后storage as global variable
   2.copy(temp1)
   3.Ctrl + v就能将打印内容copy出来
   */
-  var debug = function () {
-      var args = [];
-      for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-      }
-      var mode = get(process, "env.NODE_ENV", "");
-      if (mode === "development")
-          console.log.apply(console, args);
-  };
+  function debug(bool, logFunc) {
+      if (bool === void 0) { bool = true; }
+      if (logFunc === void 0) { logFunc = console.log; }
+      return function () {
+          var args = [];
+          for (var _i = 0; _i < arguments.length; _i++) {
+              args[_i] = arguments[_i];
+          }
+          if (bool)
+              logFunc.apply(void 0, args);
+      };
+  }
 
   var common = /*#__PURE__*/Object.freeze({
       __proto__: null,

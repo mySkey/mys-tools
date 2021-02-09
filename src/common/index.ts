@@ -1,30 +1,3 @@
-const get = (obj, key, defaultValue?: any) => {
-  let result = obj;
-  for (let k of key.split(".")) {
-    if (Array.isArray(result)) k = k.replace(/(\[|\])/gi, "");
-    if (result[k]) {
-      result = result[k];
-    } else {
-      result = false;
-      break;
-    }
-  }
-  return result || defaultValue;
-};
-
-const cloneDeep = obj => {
-  if (typeof obj !== "object") return obj;
-  const newObj =
-    Object.prototype.toString.call(obj) === "[object Array]" ? [] : {};
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      newObj[key] =
-        typeof obj[key] !== "object" ? obj[key] : cloneDeep(obj[key]);
-    }
-  }
-  return newObj;
-};
-
 const htmlCharset = [
   { key: "&nbsp;", label: " " },
   { key: "&lt;", label: "<" },
@@ -38,15 +11,42 @@ const htmlCharset = [
   { key: "&divide;", label: "÷" }
 ];
 
+function get(obj, key: string, defaultValue?: any) {
+  let result = obj;
+  for (let k of key.split(".")) {
+    if (Array.isArray(result)) k = k.replace(/(\[|\])/gi, "");
+    if (result[k]) {
+      result = result[k];
+    } else {
+      result = false;
+      break;
+    }
+  }
+  return result || defaultValue;
+}
+
+function cloneDeep(obj) {
+  if (typeof obj !== "object") return obj;
+  const newObj =
+    Object.prototype.toString.call(obj) === "[object Array]" ? [] : {};
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      newObj[key] =
+        typeof obj[key] !== "object" ? obj[key] : cloneDeep(obj[key]);
+    }
+  }
+  return newObj;
+}
+
 // localStorage操作
-const setStorage = (key: string, value) => {
+function setStorage(key: string, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (err) {
     console.log(`localStorage存储${key}失败`, err);
   }
-};
-const getStorage = (key: string) => {
+}
+function getStorage(key: string) {
   let result;
   try {
     const value = localStorage.getItem(key) || "";
@@ -55,23 +55,23 @@ const getStorage = (key: string) => {
     console.log(`localStorage获取${key}失败`, err);
   }
   return result;
-};
-const removeStorage = (key: string) => {
+}
+function removeStorage(key: string) {
   localStorage.removeItem(key);
-};
-const clearStorage = () => {
+}
+function clearStorage() {
   localStorage.clear();
-};
+}
 
 // sessionStorage操作
-const setSessionStorage = (key: string, value) => {
+function setSessionStorage(key: string, value) {
   try {
     sessionStorage.setItem(key, JSON.stringify(value));
   } catch (err) {
     console.log(`sessionStorage存储${key}失败`, err);
   }
-};
-const getSessionStorage = (key: string) => {
+}
+function getSessionStorage(key: string) {
   let result;
   try {
     const value = sessionStorage.getItem(key) || "";
@@ -80,16 +80,16 @@ const getSessionStorage = (key: string) => {
     console.log(`sessionStorage获取${key}失败`, err);
   }
   return result;
-};
-const removeSessionStorage = (key: string) => {
+}
+function removeSessionStorage(key: string) {
   sessionStorage.removeItem(key);
-};
-const clearSessionStorage = () => {
+}
+function clearSessionStorage() {
   sessionStorage.clear();
-};
+}
 
 // JSON操作
-const stringify = value => {
+function stringify(value) {
   let result;
   try {
     result = JSON.stringify(value);
@@ -97,8 +97,8 @@ const stringify = value => {
     console.log(`JSON.stringify错误:`, err);
   }
   return result;
-};
-const parse = value => {
+}
+function parse(value) {
   let result;
   try {
     result = JSON.parse(value);
@@ -106,35 +106,35 @@ const parse = value => {
     console.log(`JSON.parse错误:`, err);
   }
   return result;
-};
+}
 
 // html字符操作
-const htmlEncode = (str: string) => {
+function htmlEncode(str: string) {
   const regStr = `(${htmlCharset.map(item => item.label).join("|")})`;
   const result = str.replace(new RegExp(regStr, "gi"), function(t) {
     const item: any = htmlCharset.find(item => item.label === t);
     return item.key;
   });
   return result;
-};
-const htmlDecode = (str: string) => {
+}
+function htmlDecode(str: string) {
   const regStr = `(${htmlCharset.map(item => item.key).join("|")})`;
   const result = str.replace(new RegExp(regStr, "gi"), function(t) {
     const item: any = htmlCharset.find(item => item.key === t);
     return item.label;
   });
   return result;
-};
+}
 
 // 判断数据类型
-const getDataType = data => {
+function getDataType(data) {
   const value: any = Object.prototype.toString.call(data);
   const result = value.match(/\[object (\S*)\]/)[1];
   return result.toLocaleLowerCase();
-};
+}
 
 // 下载文件
-const downloadFile = url => {
+function downloadFile(url) {
   const iframe = document.createElement("iframe");
   iframe.style.display = "none"; // 防止影响页面
   iframe.style.height = "0"; // 防止影响页面
@@ -144,17 +144,17 @@ const downloadFile = url => {
   setTimeout(() => {
     iframe.remove();
   }, 5 * 60 * 1000);
-};
+}
 
-const paramesToStr = parames => {
+function paramesToStr(parames) {
   let res = "?";
   for (let key in parames) {
     res += `${key}=${parames[key]}&`;
   }
   return res.slice(0, res.length - 1);
-};
+}
 
-const strToParames = str => {
+function strToParames(str: string) {
   let result = {};
   if (str.includes("?")) {
     const paramesStr = str.slice(str.indexOf("?") + 1);
@@ -164,9 +164,9 @@ const strToParames = str => {
     });
   }
   return result;
-};
+}
 
-const checkFormRules = (rules, d) => {
+function checkFormRules(rules, d) {
   let result = false;
   const ruleObj = {
     required: (_, val) => !val,
@@ -188,17 +188,18 @@ const checkFormRules = (rules, d) => {
     }
   }
   return result;
-};
+}
 
 /*
 1.右击数据，然后storage as global variable
 2.copy(temp1)
 3.Ctrl + v就能将打印内容copy出来
 */
-const debug = (...args) => {
-  const mode = get(process, "env.NODE_ENV", "");
-  if (mode === "development") console.log(...args);
-};
+function debug(bool = true, logFunc = console.log) {
+  return function (...args) {
+    if (bool) logFunc(...args)
+  }
+}
 
 export {
   get,
